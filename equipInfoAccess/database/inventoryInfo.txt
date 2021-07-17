@@ -1,0 +1,9 @@
+1;Fanta;10
+1;Pepsi;10
+1;7-Up;10
+2;Fanta;10
+2;Pepsi;10
+2;7-Up;15
+3;Fanta;10
+3;Pepsi;10
+3;7-Up;10

@@ -1,0 +1,33 @@
+Giải thích các file:
+- database/**: chứa các file text là database
+- main.c: file dùng để test hàng được viết
+- equipInfoAccess.h: chứa hàm equipInfoAccess
+
+Giải thích cách dùng hàm:
+int* equipInfoAccess(int opt, int changedCommondity, int inventoryID);
+    param:
+        opt: opt 0,1, -1
+        nếu opt = 1 thì cần quan tâm 2 param phia sau
+        changedCommondity: số lượng hàng hóa thay đổi, âm hoặc dương
+        inventoryID: vị trí của hàng hóa cần thay đổi trong database
+    output: 
+        pointer
+
+cách dùng từng option:
+0:
+    - lần đầu được gọi: đọc các giá trị từ file inventoryInfo.txt vào shared mem
+    - trả về array[9] là các giá trị stock từ shared mem
+    - trả về array[0] = -1 nếu có bất cứ lỗi gì
+1:
+    - thay đổi số lượng stock dựa vào inventoryID và changedCommodity
+    - changedCommondity có thể âm hoặc dương (salesMng/deliveryMng)
+    - nếu changedCommodity > shared mem[inventoryID] thì báo lỗi
+    - nếu ko thì shared mem[inventoryID] -= changedCommondity
+    - nếu changedCommondity > 0 nhưng <= shared mem[inventoryID] thì ghi vào salesHistory.txt
+    - trả về array[0] = 1 nếu thành công
+    - trả về array[0] = -1 nếu có bất cứ lỗi gì
+-1:
+    - ghi giá trị của shared mem vào inventoryInfo.txt
+    - delete shared mem
+    - trả về array[0] = 1 nếu thành công
+    - trả về array[0] = -1 nếu có bất cứ lỗi gì
