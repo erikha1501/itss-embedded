@@ -1,8 +1,8 @@
 PROJ_NAME := server
 
 CC := gcc
-CFLAGS := $(C_STD_FLAGS) $(C_DEBUG_FLAGS)
-LDFLAGS := $(C_LD_DEBUG_FLAGS)
+CFLAGS := $(C_STD_FLAGS) $(C_DEBUG_FLAGS) -I$(G_PROJ_ROOT)/shared/inc/
+LDFLAGS := $(C_LD_DEBUG_FLAGS) -L$(G_PROJ_ROOT)/obj/shared/ -lshared
 
 SRC_DIR := ./src
 OBJ_DIR := $(if $(G_OBJ_DIR),$(G_OBJ_DIR)/$(PROJ_NAME),./obj)
@@ -17,14 +17,11 @@ build_bin: $(BIN_DIR)/$(PROJ_NAME)
 
 
 # server -> build_obj
-$(BIN_DIR)/$(PROJ_NAME): build_obj | bin_dir_check
-	$(CC) $(OBJ_FILES) $(DEP_OBJ_FILES) -o $@ $(LDFLAGS)
-
-build_obj: obj_dir_check $(OBJ_FILES)
-
+$(BIN_DIR)/$(PROJ_NAME): $(OBJ_FILES) | bin_dir_check
+	$(CC) $^ $(DEP_OBJ_FILES) -o $@ $(LDFLAGS)
 
 # *.c.o -> *.c
-$(OBJ_DIR)/%.c.o: $(SRC_DIR)/%.c
+$(OBJ_DIR)/%.c.o: $(SRC_DIR)/%.c | obj_dir_check
 	$(CC) $(CFLAGS) -c $^ -o $@
 
 

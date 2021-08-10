@@ -1,0 +1,15 @@
+ConnectRequest
+|type(1)|client id(1)|
+ConnectResponse
+|type(1)|result(1)|
+
+InventoryFetchRequest
+|type(1)|client id(1)|
+InventoryFetchResponse
+|type(1)|stock info(3)|
+
+SalesRequest
+|type(1)|client id(1)|sales info(3)|
+SalesResponse
+|type(1)|result(1)|stock info(3)|
+result = 0, 1, 2
