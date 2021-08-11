@@ -130,6 +130,7 @@ void sales_mgr_parse_client_message(sales_manager* salesManager, buffer_span8 me
             return;
         }
 
+        printf("[SalesManager] Client #%d issues sales request\n", clientID);
         handle_sales_request(salesManager, clientID, net_buffer_get_current(&bufferContext));
     }
     else if (messageType == InventoryFetchRequest)

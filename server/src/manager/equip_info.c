@@ -53,11 +53,6 @@ void equip_info_init(equip_info* equipInfo, equip_info_init_mode initMode)
     if (initMode == EQUIP_INFO_CREATE)
     {
         read_inventory_info_from_db(mem);
-
-        // For creation purpose, shared memory is not
-        // needed after inventory info is populated
-        shmdt(mem);
-        mem = NULL;
     }
 
     equipInfo->sharedMemID = shmID;
@@ -106,7 +101,7 @@ void write_inventory_info_to_db(uint8_t* inventoryInfo)
     {
         for (int j = 0; j < COMMODITY_COUNT; j++)
         {
-            int stockValue = inventoryInfo[j];
+            int stockValue = *(inventoryInfo++);
             if (fprintf(inventoryFile, "%d ", stockValue) <= 0)
             {
                 printf("Cannot write to %s\n", INVENTORY_INFO_FILE_PATH);
